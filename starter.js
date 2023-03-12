@@ -102,7 +102,7 @@ async function main(){
 
     get_options()
 
-    let r = await fetch('../../assets/json/genres_v0.json')
+    let r = await fetch('genres_v0.json')
     let json  = await r.json()
     delete json.__meta__
     globalThis.genres = json
