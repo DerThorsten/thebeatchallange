@@ -47,7 +47,6 @@ function pick_genre(genres){
     let current_genres = genres
     let path = []  
     while(true){
-        console.log(path)
         let genre = choose(Object.keys(current_genres))
         path.push(genre)
         let sub_genre = current_genres[genre]
@@ -64,25 +63,19 @@ function pick_genre(genres){
 
 function on_generate(){
 
-
-    console.log("generate")
     var outputList = $('#outputList');
     outputList.empty()
 
     for(let i=0; i<query_options.n_suggestions; ++i){
 
-
         const target_genre = query_options.target_genre;
-
 
         // pick root genre
         const root_genre = [target_genre].concat(pick_genre(globalThis.genres[target_genre]))
         // pick style genre
         const style_genre = pick_genre(globalThis.genres)
 
-        
         const item = `${root_genre} in the style of ${style_genre}`;
-
 
         var li = document.createElement("li");
         li.appendChild(document.createTextNode(item));
@@ -95,29 +88,16 @@ function on_generate(){
 };
 
 
-
-
 async function main(){
-    console.log("MAIN")
-
     get_options()
-
     let r = await fetch('genres_v0.json')
     let json  = await r.json()
     delete json.__meta__
     globalThis.genres = json
         
-
-
     document.getElementById('generate_button').onclick = on_generate;
-
     on_generate();
 
 }
 
-
-
 main();
-
-
-
