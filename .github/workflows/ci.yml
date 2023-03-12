@@ -1,31 +1,22 @@
-name: CI
-
-on: [push, pull_request]
-
-env:
-  FORCE_COLOR: 2
-
+name: Deploy
+on: [push]
+permissions:
+  contents: write
 jobs:
-  test:
-    name: Node ${{ matrix.node }}
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [16]
-
     steps:
-      - name: Clone repository
+      - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: |
+          mkdir build
+          cp index.html build
+          cp -r assets build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          node-version: "${{ matrix.node }}"
-
-      - name: Install npm dependencies
-        run: npm ci
-
-      - name: Test
-        run: npm test
+          folder: build # The folder the action should deploy.

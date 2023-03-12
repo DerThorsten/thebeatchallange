@@ -1,25 +1,31 @@
-// Importing JavaScript
-//
-// You have two choices for including Bootstrap's JS files—the whole thing,
-// or just the bits that you need.
 
 
-// Option 1
-//
-// Import Bootstrap's bundle (all of Bootstrap's JS + Popper.js dependency)
-
-import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 
 
-// Option 2
-//
-// Import just what we need
 
-// If you're importing tooltips or popovers, be sure to include our Popper.js dependency
-// import "../../node_modules/popper.js/dist/popper.min.js";
 
-// import "../../node_modules/bootstrap/js/dist/util.js";
-// import "../../node_modules/bootstrap/js/dist/modal.js";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var query_options = {}
+
+
+const urlParams = new URLSearchParams(window.location.search);
 
 
 function choose(choices) {
@@ -30,6 +36,33 @@ function choose(choices) {
 let genres = null
 
 
+
+function get_option(n, type,default_value){
+    var v = urlParams.get(n);
+    if(v !== null && v !== undefined){
+        if(type=="int"){
+            return Number(v)
+        }
+        else if(type == "string"){
+            return v;
+        }
+        else{
+            throw Error(`"${type}" is unknown query paremter type`);
+        }
+    }
+    else{
+        return default_value;
+    }
+}
+
+
+function get_options() {
+    query_options.n_suggestions  =  get_option("n_suggestions", "int", 3);
+    query_options.target_genre = get_option("target_genre", "string", "HipHop")
+    console.log(query_options)
+    
+}
+
 var select = document.getElementById('genreRootSelect');
 
 function pick_genre(genres){
@@ -37,6 +70,7 @@ function pick_genre(genres){
     let current_genres = genres
     let path = []  
     while(true){
+        console.log(path)
         let genre = choose(Object.keys(current_genres))
         path.push(genre)
         let sub_genre = current_genres[genre]
@@ -45,57 +79,67 @@ function pick_genre(genres){
         }
         current_genres = sub_genre
     }
+    //spin();
     return path
 }
 
 
 
 function on_generate(){
-    console.log("generate")
-    var output_area = $('#output_area');
-    
-    let root_genre = null;
-    let style_genre = null;
 
-    var root_genre_item = select.options[select.selectedIndex];
-    if(root_genre_item !== undefined){
-        let root_genre_start = root_genre_item.text
+
+    console.log("generate")
+    var outputList = $('#outputList');
+    outputList.empty()
+
+    for(let i=0; i<query_options.n_suggestions; ++i){
+
+
+        const target_genre = query_options.target_genre;
+
 
         // pick root genre
-        root_genre = [root_genre_start].concat(pick_genre(globalThis.genres[root_genre_start]))
+        const root_genre = [target_genre].concat(pick_genre(globalThis.genres[target_genre]))
         // pick style genre
-        style_genre = pick_genre(globalThis.genres)
+        const style_genre = pick_genre(globalThis.genres)
+
+        
+        const item = `${root_genre} in the style of ${style_genre}`;
+
+
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(item));
+        li.setAttribute("class", "list-group-item"); // added line
+        outputList.append(li);
+
 
     }
-    else{
-        // root genre
-        root_genre = pick_genre(globalThis.genres)
-        // pick style genre
-        style_genre = pick_genre(globalThis.genres)
-
-    }
-    output_area.text(`${root_genre} in the style of ${style_genre}`);
 
 };
 
 
+
+
 async function main(){
     console.log("MAIN")
+
+    get_options()
+
     let r = await fetch('../../assets/json/genres_v0.json')
     let json  = await r.json()
     delete json.__meta__
     globalThis.genres = json
-    
+        
 
 
 
-    for (const [key, value] of Object.entries(globalThis.genres)) {
+    // for (const [key, value] of Object.entries(globalThis.genres)) {
 
-        var opt = document.createElement('option');
-        opt.value = key;
-        opt.innerHTML = key;
-        select.appendChild(opt);
-    }
+    //     var opt = document.createElement('option');
+    //     opt.value = key;
+    //     opt.innerHTML = key;
+    //     select.appendChild(opt);
+    // }
 
 
 

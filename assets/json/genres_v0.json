@@ -374,7 +374,7 @@
     },
     "Electronic": {
         "2-Step (thx Random Haug)": null,
-        "8bit  aka 8-bit, Bitpop and ": {},
+        "8bit  aka 8-bit, Bitpop and Chitune": null,
         "Ambient": {
             "Ambient Dub": null,
             "Ambient House": null,
@@ -603,7 +603,7 @@
         "Grime": null,
         "Speed Garage": null
     },
-    "Hip-Hop/Rap": {
+    "HipHop": {
         "Alternative Rap": null,
         "Avant-Garde": null,
         "Bounce": null,
@@ -615,6 +615,10 @@
         "Crunkcore": null,
         "Cumbia Rap": null,
         "Dirty South": null,
+        "Drill" : {
+            "UK-Drill" : null,
+            "NY-Drill" : null
+        },
         "East Coast": {
             "Brick City Club": null,
             "Hardcore Hip Hop": null,
@@ -777,7 +781,7 @@
         "Punk Jazz": null,
         "Ragtime": null,
         "Ska Jazz": null,
-        "Skiffle (also ": {},
+        "Skiffle (also Folk)": null,
         "Smooth Jazz": null,
         "Soul Jazz": null,
         "Swing Jazz": null,
@@ -1064,7 +1068,7 @@
         "Contemporary Singer/Songwriter": null,
         "Indie Folk": null,
         "Folk-Rock": null,
-        "Love Song (": {},
+        "Love Song (Chanson)": null,
         "New Acoustic": null,
         "Traditional Folk": null
     },
