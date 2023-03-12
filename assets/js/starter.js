@@ -1,27 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var query_options = {}
 
 
@@ -132,19 +109,9 @@ async function main(){
         
 
 
-
-    // for (const [key, value] of Object.entries(globalThis.genres)) {
-
-    //     var opt = document.createElement('option');
-    //     opt.value = key;
-    //     opt.innerHTML = key;
-    //     select.appendChild(opt);
-    // }
-
-
-
     document.getElementById('generate_button').onclick = on_generate;
 
+    on_generate();
 
 }
 
